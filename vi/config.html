@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="vi" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-config" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.5.2">
+<title data-rh="true">Configuration | React Native Multiple Image Picker</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://baronha.github.io/react-native-multiple-image-picker/vi/img/banner.png"><meta data-rh="true" name="twitter:image" content="https://baronha.github.io/react-native-multiple-image-picker/vi/img/banner.png"><meta data-rh="true" property="og:url" content="https://baronha.github.io/react-native-multiple-image-picker/vi/config"><meta data-rh="true" property="og:locale" content="vi"><meta data-rh="true" property="og:locale:alternate" content="en_US"><meta data-rh="true" name="docusaurus_locale" content="vi"><meta data-rh="true" name="docsearch:language" content="vi"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Configuration | React Native Multiple Image Picker"><meta data-rh="true" name="description" content="selectMode"><meta data-rh="true" property="og:description" content="selectMode"><link data-rh="true" rel="icon" href="/react-native-multiple-image-picker/vi/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://baronha.github.io/react-native-multiple-image-picker/vi/config"><link data-rh="true" rel="alternate" href="https://baronha.github.io/react-native-multiple-image-picker/config" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://baronha.github.io/react-native-multiple-image-picker/vi/config" hreflang="vi"><link data-rh="true" rel="alternate" href="https://baronha.github.io/react-native-multiple-image-picker/config" hreflang="x-default"><link rel="stylesheet" href="/react-native-multiple-image-picker/vi/assets/css/styles.6f05fb41.css">
+<script src="/react-native-multiple-image-picker/vi/assets/js/runtime~main.88ee3a7a.js" defer="defer"></script>
+<script src="/react-native-multiple-image-picker/vi/assets/js/main.02135968.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();null!==e?t(e):window.matchMedia("(prefers-color-scheme: dark)").matches?t("dark"):window.matchMedia("(prefers-color-scheme: light)").matches?t("light"):t("dark")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_bBz3" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/react-native-multiple-image-picker/vi/"><div class="navbar__logo"><img src="/react-native-multiple-image-picker/vi/img/RNMIP.png" alt="RNMIP Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/react-native-multiple-image-picker/vi/img/RNMIP.png" alt="RNMIP Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">RNMIP</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/react-native-multiple-image-picker/vi/">Guides</a><a href="https://github.com/NitrogenZLab/react-native-multiple-image-picker/tree/main/example" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Example<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_yRbA"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a class="navbar__item navbar__link" href="/react-native-multiple-image-picker/vi/showcase">Showcase</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/NitrogenZLab/react-native-multiple-image-picker" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_yRbA"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a href="https://apps.apple.com/vn/app/binsoo-photo-filters-editor/id6502683720" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">✨ Binsoo - Photo Editor<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_yRbA"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_srs2 colorModeToggle_kJme"><button class="clean-btn toggleButton_kSsp toggleButtonDisabled_uerx" type="button" disabled="" title="Switch between dark and light mode (currently dark mode)" aria-label="Switch between dark and light mode (currently dark mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_RLRe"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_V3sJ"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_PyCV"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_dWcC"><div class="docsWrapper_q0kO"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_V3lG" type="button"></button><div class="docRoot_OnWO"><aside class="theme-doc-sidebar-container docSidebarContainer_fuBS"><div class="sidebarViewport_D0Lv"><div class="sidebar_UOQJ"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_c4NB"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/react-native-multiple-image-picker/vi/">RNMIP</a><button aria-label="Collapse sidebar category &#x27;RNMIP&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/react-native-multiple-image-picker/vi/getting-started">Getting Started</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/react-native-multiple-image-picker/vi/usage">Usage</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/react-native-multiple-image-picker/vi/config">Configuration</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/react-native-multiple-image-picker/vi/result">Result</a></li></ul></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/react-native-multiple-image-picker/vi/crop">Crop 🍕</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/react-native-multiple-image-picker/vi/preview">Preview 🎑</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/react-native-multiple-image-picker/vi/camera">Camera 📸</a></li></ul></nav></div></div></aside><main class="docMainContainer_ORCh"><div class="container padding-top--md padding-bottom--lg docItemWrapper_nMZQ"><div class="docContainer_x3dA"><div class="docContentContainer_D1cD"><div class="docItemContainer_mxWq"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_guIx" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/react-native-multiple-image-picker/vi/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_jfBo"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/react-native-multiple-image-picker/vi/"><span itemprop="name">RNMIP</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Configuration</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_t0gN theme-doc-toc-mobile tocMobile_oLwJ"><button type="button" class="clean-btn tocCollapsibleButton_expc">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Configuration</h1></header>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="selectmode"><code>selectMode</code><a href="#selectmode" class="hash-link" aria-label="Direct link to selectmode" title="Direct link to selectmode">​</a></h3>
+<p>Mode of selection in the picker.</p>
+<ul>
+<li><strong>Type</strong>: string</li>
+<li><strong>Default</strong>: <code>multiple</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Options</strong>:<!-- -->
+<ul>
+<li><code>single</code>: Single selection mode</li>
+<li><code>multiple</code>: Multiple selection mode</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="selectedassets"><code>selectedAssets</code><a href="#selectedassets" class="hash-link" aria-label="Direct link to selectedassets" title="Direct link to selectedassets">​</a></h3>
+<p>Keep previous selection in Multiple Image Picker <br>
+See <a href="/react-native-multiple-image-picker/vi/result"><strong>Result</strong></a></p>
+<ul>
+<li><strong>Type</strong>: Result[]</li>
+<li><strong>Default</strong>: <code>[]</code></li>
+<li><strong>Required</strong>: No</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="allowedlimit"><code>allowedLimit</code><a href="#allowedlimit" class="hash-link" aria-label="Direct link to allowedlimit" title="Direct link to allowedlimit">​</a></h3>
+<p>Display additional select more media when permission on <code>iOS</code> is limited.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>true</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="allowswipetoselect"><code>allowSwipeToSelect</code><a href="#allowswipetoselect" class="hash-link" aria-label="Direct link to allowswipetoselect" title="Direct link to allowswipetoselect">​</a></h3>
+<p>Allow swiping to select items.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>true</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="ishiddenoriginalbutton"><code>isHiddenOriginalButton</code><a href="#ishiddenoriginalbutton" class="hash-link" aria-label="Direct link to ishiddenoriginalbutton" title="Direct link to ishiddenoriginalbutton">​</a></h3>
+<p>Hide the original button.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>false</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="maxselect"><code>maxSelect</code><a href="#maxselect" class="hash-link" aria-label="Direct link to maxselect" title="Direct link to maxselect">​</a></h3>
+<p>Maximum number of items that can be selected.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>20</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="maxvideo"><code>maxVideo</code><a href="#maxvideo" class="hash-link" aria-label="Direct link to maxvideo" title="Direct link to maxvideo">​</a></h3>
+<p>Maximum number of videos allowed.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>20</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar__KTE" id="camera-">Camera 📸<a href="#camera-" class="hash-link" aria-label="Direct link to Camera 📸" title="Direct link to Camera 📸">​</a></h2>
+<p>Configuration camera functionality.</p>
+<ul>
+<li><strong>Type</strong>: object</li>
+<li><strong>Default</strong>: <code>{}</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="cameradevice"><code>cameraDevice</code><a href="#cameradevice" class="hash-link" aria-label="Direct link to cameradevice" title="Direct link to cameradevice">​</a></h3>
+<p>Camera device to be used.</p>
+<ul>
+<li><strong>Type</strong>: <code>string</code></li>
+<li><strong>Default</strong>: <code>back</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS</li>
+<li><strong>Options</strong>:<!-- -->
+<ul>
+<li><code>back</code>: Back camera</li>
+<li><code>front</code>: Front camera</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="videomaximumduration"><code>videoMaximumDuration</code><a href="#videomaximumduration" class="hash-link" aria-label="Direct link to videomaximumduration" title="Direct link to videomaximumduration">​</a></h3>
+<p>Maximum video duration in seconds.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: 60</li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar__KTE" id="crop-">Crop 🪚<a href="#crop-" class="hash-link" aria-label="Direct link to Crop 🪚" title="Direct link to Crop 🪚">​</a></h2>
+<p>Configuration for image cropping functionality.</p>
+<ul>
+<li><strong>Type</strong>: object</li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="circle"><code>circle</code><a href="#circle" class="hash-link" aria-label="Direct link to circle" title="Direct link to circle">​</a></h3>
+<p>Enable circular crop mask.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>false</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="ratio"><code>ratio</code><a href="#ratio" class="hash-link" aria-label="Direct link to ratio" title="Direct link to ratio">​</a></h3>
+<p>Aspect ratios for cropping.
+Android: Maximum: 4 items</p>
+<ul>
+<li><strong>Type</strong>: <code>array</code></li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+<li><strong>Properties</strong>:<!-- -->
+<ul>
+<li><code>title</code>: string - Display title for the ratio (e.g., &quot;Square&quot;, &quot;16:9&quot;)</li>
+<li><code>width</code>: number - Width value for the aspect ratio</li>
+<li><code>height</code>: number - Height value for the aspect ratio</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="defaultratio"><code>defaultRatio</code><a href="#defaultratio" class="hash-link" aria-label="Direct link to defaultratio" title="Direct link to defaultratio">​</a></h3>
+<p>Default ratio to be selected when opening the crop interface.</p>
+<ul>
+<li><strong>Type</strong>: <code>object</code></li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+<li><strong>Properties</strong>:<!-- -->
+<ul>
+<li><code>title</code>: string - Display title for the ratio (e.g., &quot;Square&quot;, &quot;16:9&quot;)</li>
+<li><code>width</code>: number - Width value for the aspect ratio</li>
+<li><code>height</code>: number - Height value for the aspect ratio</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="freestyle"><code>freeStyle</code><a href="#freestyle" class="hash-link" aria-label="Direct link to freestyle" title="Direct link to freestyle">​</a></h3>
+<p>Enable free style cropping.</p>
+<ul>
+<li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Default</strong>: <code>false</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar__KTE" id="ui-customize-">UI Customize 🌈<a href="#ui-customize-" class="hash-link" aria-label="Direct link to UI Customize 🌈" title="Direct link to UI Customize 🌈">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="theme"><code>theme</code><a href="#theme" class="hash-link" aria-label="Direct link to theme" title="Direct link to theme">​</a></h3>
+<p>Theme mode for the picker.</p>
+<ul>
+<li><strong>Type</strong>: string</li>
+<li><strong>Default</strong>: <code>system</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+<li><strong>Options</strong>:<!-- -->
+<ul>
+<li><code>light</code>: Light theme</li>
+<li><code>dark</code>: Dark theme</li>
+<li><code>system</code>: System default theme</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="primarycolor"><code>primaryColor</code><a href="#primarycolor" class="hash-link" aria-label="Direct link to primarycolor" title="Direct link to primarycolor">​</a></h3>
+<p>Primary color for the picker UI elements.</p>
+<ul>
+<li><strong>Type</strong>: <a href="https://reactnative.dev/docs/colors" target="_blank" rel="noopener noreferrer"><strong>ColorValue</strong></a></li>
+<li><strong>Default</strong>: 🟦 <code>#2979ff</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="backgrounddark"><code>backgroundDark</code><a href="#backgrounddark" class="hash-link" aria-label="Direct link to backgrounddark" title="Direct link to backgrounddark">​</a></h3>
+<p>Background color for dark mode UI elements.</p>
+<ul>
+<li><strong>Type</strong>: <a href="https://reactnative.dev/docs/colors" target="_blank" rel="noopener noreferrer"><strong>ColorValue</strong></a></li>
+<li><strong>Default</strong>: ⚫️ <code>#1A1A1A</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="selectboxstyle"><code>selectBoxStyle</code><a href="#selectboxstyle" class="hash-link" aria-label="Direct link to selectboxstyle" title="Direct link to selectboxstyle">​</a></h3>
+<p>Style of selection box in the picker.</p>
+<ul>
+<li><strong>Type</strong>: string</li>
+<li><strong>Default</strong>: <code>number</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Options</strong>:<!-- -->
+<ul>
+<li><code>number</code>: Show numbers in selection box</li>
+<li><code>tick</code>: Show checkmark in selection box</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="spacing"><code>spacing</code><a href="#spacing" class="hash-link" aria-label="Direct link to spacing" title="Direct link to spacing">​</a></h3>
+<p>Spacing between items in the grid.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>2</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="numberofcolumn"><code>numberOfColumn</code><a href="#numberofcolumn" class="hash-link" aria-label="Direct link to numberofcolumn" title="Direct link to numberofcolumn">​</a></h3>
+<p>Number of columns in the grid view.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>4</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="presentation"><code>presentation</code><a href="#presentation" class="hash-link" aria-label="Direct link to presentation" title="Direct link to presentation">​</a></h3>
+<p>Modal presentation style for the picker.</p>
+<ul>
+<li><strong>Type</strong>: string</li>
+<li><strong>Default</strong>: <code>fullScreenModal</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS</li>
+<li><strong>Options</strong>:<!-- -->
+<ul>
+<li><code>fullScreenModal</code>: Full screen presentation</li>
+<li><code>formSheet</code>: Form sheet presentation</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar__KTE" id="filter-data-️">Filter data 🎞️<a href="#filter-data-️" class="hash-link" aria-label="Direct link to Filter data 🎞️" title="Direct link to Filter data 🎞️">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="mediatype"><code>mediaType</code><a href="#mediatype" class="hash-link" aria-label="Direct link to mediatype" title="Direct link to mediatype">​</a></h3>
+<p>Type of media to be displayed in the picker.</p>
+<ul>
+<li><strong>Type</strong>: string</li>
+<li><strong>Default</strong>: <code>all</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Options</strong>:<!-- -->
+<ul>
+<li><code>video</code>: Only show videos</li>
+<li><code>image</code>: Only show images</li>
+<li><code>all</code>: Show both videos and images</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="maxvideoduration"><code>maxVideoDuration</code><a href="#maxvideoduration" class="hash-link" aria-label="Direct link to maxvideoduration" title="Direct link to maxvideoduration">​</a></h3>
+<p>Maximum duration for videos in seconds.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="minvideoduration"><code>minVideoDuration</code><a href="#minvideoduration" class="hash-link" aria-label="Direct link to minvideoduration" title="Direct link to minvideoduration">​</a></h3>
+<p>Minimum duration for videos in seconds.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="maxfilesize"><code>maxFileSize</code><a href="#maxfilesize" class="hash-link" aria-label="Direct link to maxfilesize" title="Direct link to maxfilesize">​</a></h3>
+<p>Maximum file size in bytes.</p>
+<ul>
+<li><strong>Type</strong>: number</li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar__KTE" id="preview-">Preview 🌠<a href="#preview-" class="hash-link" aria-label="Direct link to Preview 🌠" title="Direct link to Preview 🌠">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="ispreview"><code>isPreview</code><a href="#ispreview" class="hash-link" aria-label="Direct link to ispreview" title="Direct link to ispreview">​</a></h3>
+<p>Enable preview functionality.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>true</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="isshowpreviewlist"><code>isShowPreviewList</code><a href="#isshowpreviewlist" class="hash-link" aria-label="Direct link to isshowpreviewlist" title="Direct link to isshowpreviewlist">​</a></h3>
+<p>Show preview list.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>false</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="ishiddenpreviewbutton"><code>isHiddenPreviewButton</code><a href="#ishiddenpreviewbutton" class="hash-link" aria-label="Direct link to ishiddenpreviewbutton" title="Direct link to ishiddenpreviewbutton">​</a></h3>
+<p>Hide the preview button and button mode.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>false</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="allowhaptictouchpreview"><code>allowHapticTouchPreview</code><a href="#allowhaptictouchpreview" class="hash-link" aria-label="Direct link to allowhaptictouchpreview" title="Direct link to allowhaptictouchpreview">​</a></h3>
+<p>Enable haptic feedback on preview.</p>
+<ul>
+<li><strong>Type</strong>: boolean</li>
+<li><strong>Default</strong>: <code>false</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar__KTE" id="localization-">Localization 🌐<a href="#localization-" class="hash-link" aria-label="Direct link to Localization 🌐" title="Direct link to Localization 🌐">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="text"><code>text</code><a href="#text" class="hash-link" aria-label="Direct link to text" title="Direct link to text">​</a></h3>
+<p>Custom text labels for buttons and headers.</p>
+<ul>
+<li><strong>Type</strong>: object</li>
+<li><strong>Default</strong>: <code>undefined</code></li>
+<li><strong>Required</strong>: No</li>
+<li><strong>Platform</strong>: iOS, Android</li>
+<li><strong>Properties</strong>:<!-- -->
+<ul>
+<li><code>finish</code>: string - Text for finish/done button</li>
+<li><code>original</code>: string - Text for original button</li>
+<li><code>preview</code>: string - Text for preview button</li>
+<li><code>edit</code>: string - Text for edit button</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar__KTE" id="language"><code>language</code><a href="#language" class="hash-link" aria-label="Direct link to language" title="Direct link to language">​</a></h3>
+<p>Interface language for the picker.</p>
+<ul>
+<li>
+<p><strong>Type</strong>: string</p>
+</li>
+<li>
+<p><strong>Default</strong>: <code>system</code></p>
+</li>
+<li>
+<p><strong>Required</strong>: No</p>
+</li>
+<li>
+<p><strong>Options</strong>:</p>
+<ul>
+<li><code>system</code>: 🌐 System default</li>
+<li><code>zh-Hans</code>: 🇨🇳 Simplified Chinese</li>
+<li><code>zh-Hant</code>: 🇹🇼 Traditional Chinese</li>
+<li><code>ja</code>: 🇯🇵 Japanese</li>
+<li><code>ko</code>: 🇰🇷 Korean</li>
+<li><code>en</code>: 🇬🇧 English</li>
+<li><code>vi</code>: 🇻🇳 Vietnamese</li>
+<li><code>ru</code>: 🇷🇺 Russian</li>
+<li><code>de</code>: 🇩🇪 German</li>
+<li><code>fr</code>: 🇫🇷 French</li>
+<li><code>ar</code>: 🇸🇦 Arabic</li>
+</ul>
+<p><strong>iOS Only</strong>:</p>
+<ul>
+<li><code>id</code>: 🇮🇩 Indonesian</li>
+<li><code>th</code>: 🇹🇭 Thai</li>
+</ul>
+</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/NitrogenZLab/react-native-multiple-image-picker/tree/main/docs/docs/docs/CONFIG.mdx" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_xWz5" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_SN1R"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/react-native-multiple-image-picker/vi/usage"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Usage</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/react-native-multiple-image-picker/vi/result"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Result</div></a></nav></div></div><div class="docTOCContainer__PfR"><div class="tableOfContents_WH1_ thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents"><li><a href="#selectmode" class="table-of-contents__link toc-highlight"><code>selectMode</code></a></li><li><a href="#selectedassets" class="table-of-contents__link toc-highlight"><code>selectedAssets</code></a></li><li><a href="#allowedlimit" class="table-of-contents__link toc-highlight"><code>allowedLimit</code></a></li><li><a href="#allowswipetoselect" class="table-of-contents__link toc-highlight"><code>allowSwipeToSelect</code></a></li><li><a href="#ishiddenoriginalbutton" class="table-of-contents__link toc-highlight"><code>isHiddenOriginalButton</code></a></li><li><a href="#maxselect" class="table-of-contents__link toc-highlight"><code>maxSelect</code></a></li><li><a href="#maxvideo" class="table-of-contents__link toc-highlight"><code>maxVideo</code></a></li><li><a href="#camera-" class="table-of-contents__link toc-highlight">Camera 📸</a><ul><li><a href="#cameradevice" class="table-of-contents__link toc-highlight"><code>cameraDevice</code></a></li><li><a href="#videomaximumduration" class="table-of-contents__link toc-highlight"><code>videoMaximumDuration</code></a></li></ul></li><li><a href="#crop-" class="table-of-contents__link toc-highlight">Crop 🪚</a><ul><li><a href="#circle" class="table-of-contents__link toc-highlight"><code>circle</code></a></li><li><a href="#ratio" class="table-of-contents__link toc-highlight"><code>ratio</code></a></li><li><a href="#defaultratio" class="table-of-contents__link toc-highlight"><code>defaultRatio</code></a></li><li><a href="#freestyle" class="table-of-contents__link toc-highlight"><code>freeStyle</code></a></li></ul></li><li><a href="#ui-customize-" class="table-of-contents__link toc-highlight">UI Customize 🌈</a><ul><li><a href="#theme" class="table-of-contents__link toc-highlight"><code>theme</code></a></li><li><a href="#primarycolor" class="table-of-contents__link toc-highlight"><code>primaryColor</code></a></li><li><a href="#backgrounddark" class="table-of-contents__link toc-highlight"><code>backgroundDark</code></a></li><li><a href="#selectboxstyle" class="table-of-contents__link toc-highlight"><code>selectBoxStyle</code></a></li><li><a href="#spacing" class="table-of-contents__link toc-highlight"><code>spacing</code></a></li><li><a href="#numberofcolumn" class="table-of-contents__link toc-highlight"><code>numberOfColumn</code></a></li><li><a href="#presentation" class="table-of-contents__link toc-highlight"><code>presentation</code></a></li></ul></li><li><a href="#filter-data-️" class="table-of-contents__link toc-highlight">Filter data 🎞️</a><ul><li><a href="#mediatype" class="table-of-contents__link toc-highlight"><code>mediaType</code></a></li><li><a href="#maxvideoduration" class="table-of-contents__link toc-highlight"><code>maxVideoDuration</code></a></li><li><a href="#minvideoduration" class="table-of-contents__link toc-highlight"><code>minVideoDuration</code></a></li><li><a href="#maxfilesize" class="table-of-contents__link toc-highlight"><code>maxFileSize</code></a></li></ul></li><li><a href="#preview-" class="table-of-contents__link toc-highlight">Preview 🌠</a><ul><li><a href="#ispreview" class="table-of-contents__link toc-highlight"><code>isPreview</code></a></li><li><a href="#isshowpreviewlist" class="table-of-contents__link toc-highlight"><code>isShowPreviewList</code></a></li><li><a href="#ishiddenpreviewbutton" class="table-of-contents__link toc-highlight"><code>isHiddenPreviewButton</code></a></li><li><a href="#allowhaptictouchpreview" class="table-of-contents__link toc-highlight"><code>allowHapticTouchPreview</code></a></li></ul></li><li><a href="#localization-" class="table-of-contents__link toc-highlight">Localization 🌐</a><ul><li><a href="#text" class="table-of-contents__link toc-highlight"><code>text</code></a></li><li><a href="#language" class="table-of-contents__link toc-highlight"><code>language</code></a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Open Source by <a rel="noreferrer" href="https://baoha.vercel.app/" target="_blank">Bao Ha</a>.</div><hr><div class="footer__links text--center"><div class="footer__links"><a href="https://github.com/baronha" target="_blank" rel="noopener noreferrer" class="footer__link-item">Github<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_yRbA"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><span class="footer__link-separator">·</span><a href="https://twitter.com/_baronha" target="_blank" rel="noopener noreferrer" class="footer__link-item">X (Twitter)<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_yRbA"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div></div></div></div></footer></div>
+</body>
+</html>
