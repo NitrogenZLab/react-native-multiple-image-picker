@@ -150,4 +150,16 @@ export interface PickerResult extends BaseResult {
    * Used to track image modifications
    */
   crop?: boolean
+
+  /**
+   * EXIF orientation value from the original image
+   * Only applicable for image content, null for videos
+   * Values correspond to EXIF orientation:
+   * 1 = Normal (0°)
+   * 3 = Upside down (180°)
+   * 6 = Rotated 90° CW
+   * 8 = Rotated 90° CCW
+   * @example 6 // Image was rotated 90° clockwise
+   */
+  orientation?: number
 }

@@ -3,8 +3,14 @@ package com.margelo.nitro.multipleimagepicker
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Matrix
 import android.net.Uri
+import android.util.Log
+import androidx.exifinterface.media.ExifInterface
+import java.io.IOException
 import androidx.core.content.ContextCompat
 import com.facebook.react.bridge.BaseActivityEventListener
 import com.facebook.react.bridge.ColorPropConverter
@@ -163,7 +169,13 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
                     localMedia.forEach { item ->
                         if (item != null) {
                             val media = getResult(item)
-                            data += media  // Add the media to the data array
+                            // Adjust orientation using ExifInterface for Android (only for images)
+                            val adjustedMedia = if (media.type == ResultType.IMAGE) {
+                                adjustOrientation(media, item.path)
+                            } else {
+                                media
+                            }
+                            data += adjustedMedia  // Add the media to the data array
                         }
                     }
                     resolved(data)
@@ -634,6 +646,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
             parentFolderName = item.parentFolderName,
             creationDate = item.dateAddedTime.toDouble(),
             crop = item.isCut,
+            orientation = null, // Will be populated by adjustOrientation for images
             path,
             type,
             fileName = item.fileName,
@@ -643,6 +656,55 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
 
         return media
     }
+
+private fun adjustOrientation(pickerResult: PickerResult, filePath: String): PickerResult {
+    try {
+        val ei = ExifInterface(filePath)
+        val orientation = ei.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+
+        val rotatedBitmap: Bitmap? = when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(filePath, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(filePath, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(filePath, 270f)
+            else -> BitmapFactory.decodeFile(filePath)
+        }
+
+        rotatedBitmap?.let { bitmap ->
+            val width = bitmap.width.toDouble()
+            val height = bitmap.height.toDouble()
+            // Update width, height, and orientation in pickerResult
+            return pickerResult.copy(
+                width = width, 
+                height = height,
+                orientation = orientation.toDouble()
+            )
+        }
+    } catch (e: IOException) {
+        Log.e(TAG, "Failed to adjust orientation", e)
+    }
+    // Return with orientation info even if bitmap processing fails
+    return try {
+        val ei = ExifInterface(filePath)
+        val orientation = ei.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+        pickerResult.copy(orientation = orientation.toDouble())
+    } catch (e: IOException) {
+        Log.e(TAG, "Failed to read orientation", e)
+        pickerResult
+    }
+}
+
+private fun rotateImage(filePath: String, degree: Float): Bitmap? {
+    val bitmap = BitmapFactory.decodeFile(filePath)
+    val matrix = Matrix()
+    matrix.postRotate(degree)
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+}
 
     override fun getAppContext(): Context {
         return reactApplicationContext
