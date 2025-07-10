@@ -30,6 +30,7 @@ data class PickerResult
     val parentFolderName: String?,
     val creationDate: Double?,
     val crop: Boolean?,
+    val orientation: Double?,
     val path: String,
     val type: ResultType,
     val duration: Double?,

@@ -54,14 +54,114 @@ add_definitions(-DBUILDING_MULTIPLEIMAGEPICKER_WITH_GENERATED_CMAKE_PROJECT)
 # Add all libraries required by the generated specs
 find_package(fbjni REQUIRED) # <-- Used for communication between Java <-> C++
 find_package(ReactAndroid REQUIRED) # <-- Used to set up React Native bindings (e.g. CallInvoker/TurboModule)
-find_package(react-native-nitro-modules REQUIRED) # <-- Used to create all HybridObjects and use the Nitro core library
+
+# FORCE MANUAL NITRO MODULES LINKING - Skip prefab entirely as it's broken
+message(STATUS "Forcing manual NitroModules configuration to avoid broken prefab...")
+message(STATUS "CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+message(STATUS "ANDROID_ABI: ${ANDROID_ABI}")
+
+# Get the project root from CMAKE_SOURCE_DIR
+# MultipleImagePicker is in node_modules/@baronha/react-native-multiple-image-picker/android
+# So we need to go up 4 levels to reach the project root
+get_filename_component(PROJECT_ROOT "${CMAKE_SOURCE_DIR}/../../../.." ABSOLUTE)
+message(STATUS "PROJECT_ROOT: ${PROJECT_ROOT}")
+
+# Find the NitroModules library manually using file(GLOB) for dynamic hash folders
+set(NITRO_MODULES_LIB "")
+
+# Search in different build output locations (both debug and release)
+file(GLOB NITRO_SEARCH_PATHS
+    # Debug build paths
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cmake/debug/obj/${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cxx/Debug/*/obj/${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/debug/prefab/modules/NitroModules/libs/android.${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/${ANDROID_ABI}/libNitroModules.so"
+    # Release build paths
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cmake/release/obj/${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cxx/Release/*/obj/${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/release/prefab/modules/NitroModules/libs/android.${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/${ANDROID_ABI}/libNitroModules.so"
+    "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/${ANDROID_ABI}/libNitroModules.so"
+)
+
+# Pick the first available library
+foreach(NITRO_PATH ${NITRO_SEARCH_PATHS})
+    if(EXISTS "${NITRO_PATH}")
+        set(NITRO_MODULES_LIB "${NITRO_PATH}")
+        break()
+    endif()
+endforeach()
+
+if(NITRO_MODULES_LIB)
+    message(STATUS "Found NitroModules library at: ${NITRO_MODULES_LIB}")
+    
+    # Create imported target manually without trying prefab
+    add_library(react-native-nitro-modules::NitroModules SHARED IMPORTED)
+    set_target_properties(react-native-nitro-modules::NitroModules PROPERTIES
+        IMPORTED_LOCATION "${NITRO_MODULES_LIB}"
+        IMPORTED_NO_SONAME ON
+    )
+    
+    # Add include directories
+    find_path(NITRO_MODULES_INCLUDE_DIR
+        NAMES "NitroModules.h" "NitroModules/NitroModules.h"
+        PATHS
+            "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/src/main/cpp"
+            "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/headers/nitromodules"
+            "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/debug/prefab/modules/NitroModules/include"
+            "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/release/prefab/modules/NitroModules/include"
+        NO_DEFAULT_PATH
+    )
+    
+    if(NITRO_MODULES_INCLUDE_DIR)
+        target_include_directories(react-native-nitro-modules::NitroModules INTERFACE "${NITRO_MODULES_INCLUDE_DIR}")
+        message(STATUS "Found NitroModules headers at: ${NITRO_MODULES_INCLUDE_DIR}")
+    else()
+        # Fallback to known header location
+        target_include_directories(react-native-nitro-modules::NitroModules INTERFACE 
+            "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/headers/nitromodules"
+        )
+        message(STATUS "Using fallback NitroModules headers location")
+    endif()
+    
+    # Also add headers directly to MultipleImagePicker target
+    target_include_directories(MultipleImagePicker PRIVATE
+        "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/headers/nitromodules"
+    )
+    
+    set(react-native-nitro-modules_FOUND TRUE)
+else()
+    # If not found during configure, use a generic target that will resolve at link time
+    message(WARNING "NitroModules library not found during configure time. Will attempt runtime resolution. Searched in:\n  Debug paths:\n    ${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cmake/debug/obj/${ANDROID_ABI}\n    ${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cxx/Debug/*/obj/${ANDROID_ABI}\n    ${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/debug/prefab/modules/NitroModules/libs/android.${ANDROID_ABI}\n  Release paths:\n    ${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cmake/release/obj/${ANDROID_ABI}\n    ${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/cxx/Release/*/obj/${ANDROID_ABI}\n    ${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/intermediates/prefab_package/release/prefab/modules/NitroModules/libs/android.${ANDROID_ABI}")
+    
+    # Create a placeholder target that will be resolved at build time
+    add_library(react-native-nitro-modules::NitroModules INTERFACE IMPORTED)
+    
+    # Add likely include directories
+    target_include_directories(react-native-nitro-modules::NitroModules INTERFACE 
+        "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/headers/nitromodules"
+        "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/src/main/cpp"
+    )
+    
+    # Also add headers directly to MultipleImagePicker target
+    target_include_directories(MultipleImagePicker PRIVATE
+        "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/build/headers/nitromodules"
+        "${PROJECT_ROOT}/node_modules/react-native-nitro-modules/android/src/main/cpp"
+    )
+    
+    # Add the library name for the linker to find
+    set(NITRO_MODULES_LIB "NitroModules")
+    set(react-native-nitro-modules_FOUND TRUE)
+endif()
 
 # Link all libraries together
 target_link_libraries(
         MultipleImagePicker
-        fbjni::fbjni                              # <-- Facebook C++ JNI helpers
-        ReactAndroid::jsi                         # <-- RN: JSI
-        react-native-nitro-modules::NitroModules  # <-- NitroModules Core :)
+        fbjni::fbjni                              # < -- Facebook C++ JNI helpers
+        ReactAndroid::jsi                         # < -- RN: JSI
+        react-native-nitro-modules::NitroModules  # < -- NitroModules Core :)
+        "${NITRO_MODULES_LIB}"                    # < -- Direct path as backup
 )
 
 # Link react-native (different prefab between RN 0.75 and RN 0.76)
