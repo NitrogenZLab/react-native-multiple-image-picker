@@ -3,10 +3,7 @@ package com.margelo.nitro.multipleimagepicker
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.Matrix
 import android.net.Uri
 import android.util.Log
 import androidx.exifinterface.media.ExifInterface
@@ -170,8 +167,8 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
                         if (item != null) {
                             val media = getResult(item)
                             // Adjust orientation using ExifInterface for Android (only for images)
-                            val adjustedMedia = if (media.type == ResultType.IMAGE) {
-                                adjustOrientation(media, item.path)
+                            val adjustedMedia = if (media.type == ResultType.IMAGE && !item.realPath.isNullOrBlank()) {
+                                adjustOrientation(media, item.realPath)
                             } else {
                                 media
                             }
@@ -658,52 +655,111 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
     }
 
 private fun adjustOrientation(pickerResult: PickerResult, filePath: String): PickerResult {
-    try {
-        val ei = ExifInterface(filePath)
-        val orientation = ei.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_UNDEFINED
-        )
-
-        val rotatedBitmap: Bitmap? = when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(filePath, 90f)
-            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(filePath, 180f)
-            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(filePath, 270f)
-            else -> BitmapFactory.decodeFile(filePath)
-        }
-
-        rotatedBitmap?.let { bitmap ->
-            val width = bitmap.width.toDouble()
-            val height = bitmap.height.toDouble()
-            // Update width, height, and orientation in pickerResult
-            return pickerResult.copy(
-                width = width, 
-                height = height,
-                orientation = orientation.toDouble()
-            )
-        }
-    } catch (e: IOException) {
-        Log.e(TAG, "Failed to adjust orientation", e)
+    // Validate file path
+    if (filePath.isBlank()) {
+        Log.w(TAG, "File path is blank, returning original result")
+        return pickerResult
     }
-    // Return with orientation info even if bitmap processing fails
-    return try {
-        val ei = ExifInterface(filePath)
+
+    // Clean the file path - remove file:// prefix and handle content URIs
+    val cleanPath = when {
+        filePath.startsWith("file://") -> filePath.removePrefix("file://")
+        filePath.startsWith("content://") -> {
+            Log.w(TAG, "Content URI provided instead of file path: $filePath, returning original result")
+            return pickerResult
+        }
+        else -> filePath
+    }
+    
+    val file = File(cleanPath)
+    Log.d(TAG, "Checking orientation for file: ${file.absolutePath}")
+    
+    if (!file.exists()) {
+        Log.w(TAG, "File does not exist: ${file.absolutePath} (original path: $filePath)")
+        return pickerResult
+    }
+    
+    if (!file.canRead()) {
+        Log.w(TAG, "Cannot read file: ${file.absolutePath}")
+        return pickerResult
+    }
+
+    try {
+        val ei = ExifInterface(file.absolutePath)
         val orientation = ei.getAttributeInt(
             ExifInterface.TAG_ORIENTATION,
             ExifInterface.ORIENTATION_UNDEFINED
         )
-        pickerResult.copy(orientation = orientation.toDouble())
+
+        Log.d(TAG, "EXIF orientation for $filePath: $orientation")
+        
+        // Calculate adjusted dimensions based on orientation
+        val (adjustedWidth, adjustedHeight) = when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90,
+            ExifInterface.ORIENTATION_ROTATE_270,
+            ExifInterface.ORIENTATION_TRANSPOSE,
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                // Swap width and height for 90° and 270° rotations
+                Log.d(TAG, "Swapping dimensions for orientation: $orientation")
+                Pair(pickerResult.height, pickerResult.width)
+            }
+            else -> {
+                // Keep original dimensions for 0°, 180°, and flips
+                Log.d(TAG, "Keeping original dimensions for orientation: $orientation")
+                Pair(pickerResult.width, pickerResult.height)
+            }
+        }
+        
+        Log.d(TAG, "Adjusted dimensions: ${adjustedWidth}x${adjustedHeight} (orientation: $orientation)")
+        
+        // Return result with adjusted dimensions and orientation angle
+        return pickerResult.copy(
+            width = adjustedWidth,
+            height = adjustedHeight,
+            orientation = exifOrientationToRotationDegrees(orientation)
+        )
     } catch (e: IOException) {
-        Log.e(TAG, "Failed to read orientation", e)
-        pickerResult
+        Log.e(TAG, "IOException while adjusting orientation for $filePath", e)
+    } catch (e: OutOfMemoryError) {
+        Log.e(TAG, "OutOfMemoryError while processing image $filePath", e)
+    } catch (e: Exception) {
+        Log.e(TAG, "Unexpected error while adjusting orientation for $filePath", e)
+    }
+    
+    // Fallback: try to read orientation info even if bitmap processing fails
+    return try {
+        val ei = ExifInterface(file.absolutePath)
+        val orientation = ei.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+        val rotation = exifOrientationToRotationDegrees(orientation)
+        Log.d(TAG, "Fallback: setting orientation to $rotation degrees (EXIF: $orientation) for $filePath")
+        pickerResult.copy(orientation = rotation)
+    } catch (e: Exception) {
+        Log.e(TAG, "Failed to read orientation in fallback for $filePath", e)
+        // Return original result with no rotation needed
+        pickerResult.copy(orientation = 0.0)
     }
 }
 
-private fun rotateImage(filePath: String, degree: Float): Bitmap? {
-    val bitmap = BitmapFactory.decodeFile(filePath)
-    val matrix = Matrix()
-    matrix.postRotate(degree)
-    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+/**
+ * Maps EXIF orientation values to rotation degrees for image display.
+ * Returns the rotation angle needed to display the image correctly.
+ */
+private fun exifOrientationToRotationDegrees(exifOrientation: Int): Double {
+    return when (exifOrientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> 90.0
+        ExifInterface.ORIENTATION_ROTATE_180 -> 180.0
+        ExifInterface.ORIENTATION_ROTATE_270 -> -90.0
+        ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> 0.0 // Flip, not rotate
+        ExifInterface.ORIENTATION_FLIP_VERTICAL -> 0.0 // Flip, not rotate
+        ExifInterface.ORIENTATION_TRANSPOSE -> 90.0 // Flip + rotate 90
+        ExifInterface.ORIENTATION_TRANSVERSE -> -90.0 // Flip + rotate -90
+        ExifInterface.ORIENTATION_NORMAL,
+        ExifInterface.ORIENTATION_UNDEFINED -> 0.0
+        else -> 0.0 // No rotation needed
+    }
 }
 
     override fun getAppContext(): Context {
