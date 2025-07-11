@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
+import androidx.exifinterface.media.ExifInterface
+import java.io.IOException
 import androidx.core.content.ContextCompat
 import com.facebook.react.bridge.BaseActivityEventListener
 import com.facebook.react.bridge.ColorPropConverter
@@ -163,7 +166,13 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
                     localMedia.forEach { item ->
                         if (item != null) {
                             val media = getResult(item)
-                            data += media  // Add the media to the data array
+                            // Adjust orientation using ExifInterface for Android (only for images)
+                            val adjustedMedia = if (media.type == ResultType.IMAGE && !item.realPath.isNullOrBlank()) {
+                                adjustOrientation(media, item.realPath)
+                            } else {
+                                media
+                            }
+                            data += adjustedMedia  // Add the media to the data array
                         }
                     }
                     resolved(data)
@@ -634,6 +643,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
             parentFolderName = item.parentFolderName,
             creationDate = item.dateAddedTime.toDouble(),
             crop = item.isCut,
+            orientation = null, // Will be populated by adjustOrientation for images
             path,
             type,
             fileName = item.fileName,
@@ -643,6 +653,114 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
 
         return media
     }
+
+private fun adjustOrientation(pickerResult: PickerResult, filePath: String): PickerResult {
+    // Validate file path
+    if (filePath.isBlank()) {
+        Log.w(TAG, "File path is blank, returning original result")
+        return pickerResult
+    }
+
+    // Clean the file path - remove file:// prefix and handle content URIs
+    val cleanPath = when {
+        filePath.startsWith("file://") -> filePath.removePrefix("file://")
+        filePath.startsWith("content://") -> {
+            Log.w(TAG, "Content URI provided instead of file path: $filePath, returning original result")
+            return pickerResult
+        }
+        else -> filePath
+    }
+    
+    val file = File(cleanPath)
+    Log.d(TAG, "Checking orientation for file: ${file.absolutePath}")
+    
+    if (!file.exists()) {
+        Log.w(TAG, "File does not exist: ${file.absolutePath} (original path: $filePath)")
+        return pickerResult
+    }
+    
+    if (!file.canRead()) {
+        Log.w(TAG, "Cannot read file: ${file.absolutePath}")
+        return pickerResult
+    }
+
+    try {
+        val ei = ExifInterface(file.absolutePath)
+        val orientation = ei.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+
+        Log.d(TAG, "EXIF orientation for $filePath: $orientation")
+        
+        // Calculate adjusted dimensions based on orientation
+        val (adjustedWidth, adjustedHeight) = when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90,
+            ExifInterface.ORIENTATION_ROTATE_270,
+            ExifInterface.ORIENTATION_TRANSPOSE,
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                // Swap width and height for 90° and 270° rotations
+                Log.d(TAG, "Swapping dimensions for orientation: $orientation")
+                Pair(pickerResult.height, pickerResult.width)
+            }
+            else -> {
+                // Keep original dimensions for 0°, 180°, and flips
+                Log.d(TAG, "Keeping original dimensions for orientation: $orientation")
+                Pair(pickerResult.width, pickerResult.height)
+            }
+        }
+        
+        Log.d(TAG, "Adjusted dimensions: ${adjustedWidth}x${adjustedHeight} (orientation: $orientation)")
+        
+        // Return result with adjusted dimensions and orientation angle
+        return pickerResult.copy(
+            width = adjustedWidth,
+            height = adjustedHeight,
+            orientation = exifOrientationToRotationDegrees(orientation)
+        )
+    } catch (e: IOException) {
+        Log.e(TAG, "IOException while adjusting orientation for $filePath", e)
+    } catch (e: OutOfMemoryError) {
+        Log.e(TAG, "OutOfMemoryError while processing image $filePath", e)
+    } catch (e: Exception) {
+        Log.e(TAG, "Unexpected error while adjusting orientation for $filePath", e)
+    }
+    
+    // Fallback: try to read orientation info even if bitmap processing fails
+    return try {
+        val ei = ExifInterface(file.absolutePath)
+        val orientation = ei.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+        val rotation = exifOrientationToRotationDegrees(orientation)
+        Log.d(TAG, "Fallback: setting orientation to $rotation degrees (EXIF: $orientation) for $filePath")
+        pickerResult.copy(orientation = rotation)
+    } catch (e: Exception) {
+        Log.e(TAG, "Failed to read orientation in fallback for $filePath", e)
+        // Return original result with no rotation needed
+        pickerResult.copy(orientation = 0.0)
+    }
+}
+
+/**
+ * Maps EXIF orientation values to rotation degrees for image display.
+ * Returns the rotation angle needed to display the image correctly.
+ */
+private fun exifOrientationToRotationDegrees(exifOrientation: Int): Double {
+    return when (exifOrientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> 90.0
+        ExifInterface.ORIENTATION_ROTATE_180 -> 180.0
+        ExifInterface.ORIENTATION_ROTATE_270 -> -90.0
+        ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> 0.0 // Flip, not rotate
+        ExifInterface.ORIENTATION_FLIP_VERTICAL -> 0.0 // Flip, not rotate
+        ExifInterface.ORIENTATION_TRANSPOSE -> 90.0 // Flip + rotate 90
+        ExifInterface.ORIENTATION_TRANSVERSE -> -90.0 // Flip + rotate -90
+        ExifInterface.ORIENTATION_NORMAL,
+        ExifInterface.ORIENTATION_UNDEFINED -> 0.0
+        else -> 0.0 // No rotation needed
+    }
+}
 
     override fun getAppContext(): Context {
         return reactApplicationContext

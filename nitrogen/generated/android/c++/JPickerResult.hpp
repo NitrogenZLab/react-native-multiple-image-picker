@@ -54,6 +54,8 @@ namespace margelo::nitro::multipleimagepicker {
       jni::local_ref<jni::JDouble> creationDate = this->getFieldValue(fieldCreationDate);
       static const auto fieldCrop = clazz->getField<jni::JBoolean>("crop");
       jni::local_ref<jni::JBoolean> crop = this->getFieldValue(fieldCrop);
+      static const auto fieldOrientation = clazz->getField<jni::JDouble>("orientation");
+      jni::local_ref<jni::JDouble> orientation = this->getFieldValue(fieldOrientation);
       static const auto fieldPath = clazz->getField<jni::JString>("path");
       jni::local_ref<jni::JString> path = this->getFieldValue(fieldPath);
       static const auto fieldType = clazz->getField<JResultType>("type");
@@ -75,6 +77,7 @@ namespace margelo::nitro::multipleimagepicker {
         parentFolderName != nullptr ? std::make_optional(parentFolderName->toStdString()) : std::nullopt,
         creationDate != nullptr ? std::make_optional(creationDate->value()) : std::nullopt,
         crop != nullptr ? std::make_optional(static_cast<bool>(crop->value())) : std::nullopt,
+        orientation != nullptr ? std::make_optional(orientation->value()) : std::nullopt,
         path->toStdString(),
         type->toCpp(),
         duration != nullptr ? std::make_optional(duration->value()) : std::nullopt,
@@ -100,6 +103,7 @@ namespace margelo::nitro::multipleimagepicker {
         value.parentFolderName.has_value() ? jni::make_jstring(value.parentFolderName.value()) : nullptr,
         value.creationDate.has_value() ? jni::JDouble::valueOf(value.creationDate.value()) : nullptr,
         value.crop.has_value() ? jni::JBoolean::valueOf(value.crop.value()) : nullptr,
+        value.orientation.has_value() ? jni::JDouble::valueOf(value.orientation.value()) : nullptr,
         jni::make_jstring(value.path),
         JResultType::fromCpp(value.type),
         value.duration.has_value() ? jni::JDouble::valueOf(value.duration.value()) : nullptr,
