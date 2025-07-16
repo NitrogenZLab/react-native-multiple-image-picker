@@ -18,7 +18,7 @@ public extension PickerResult {
   /**
    * Create a new instance of `PickerResult`.
    */
-  init(localIdentifier: String, width: Double, height: Double, mime: String, size: Double, bucketId: Double?, realPath: String?, parentFolderName: String?, creationDate: Double?, crop: Bool?, path: String, type: ResultType, duration: Double?, thumbnail: String?, fileName: String?) {
+  init(localIdentifier: String, width: Double, height: Double, mime: String, size: Double, bucketId: Double?, realPath: String?, parentFolderName: String?, creationDate: Double?, crop: Bool?, orientation: Double?, path: String, type: ResultType, duration: Double?, thumbnail: String?, fileName: String?) {
     self.init(std.string(localIdentifier), width, height, std.string(mime), size, { () -> bridge.std__optional_double_ in
       if let __unwrappedValue = bucketId {
         return bridge.create_std__optional_double_(__unwrappedValue)
@@ -46,6 +46,12 @@ public extension PickerResult {
     }(), { () -> bridge.std__optional_bool_ in
       if let __unwrappedValue = crop {
         return bridge.create_std__optional_bool_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_double_ in
+      if let __unwrappedValue = orientation {
+        return bridge.create_std__optional_double_(__unwrappedValue)
       } else {
         return .init()
       }
@@ -215,6 +221,23 @@ public extension PickerResult {
       self.__crop = { () -> bridge.std__optional_bool_ in
         if let __unwrappedValue = newValue {
           return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var orientation: Double? {
+    @inline(__always)
+    get {
+      return self.__orientation.value
+    }
+    @inline(__always)
+    set {
+      self.__orientation = { () -> bridge.std__optional_double_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_double_(__unwrappedValue)
         } else {
           return .init()
         }
