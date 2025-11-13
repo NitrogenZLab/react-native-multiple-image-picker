@@ -27,3 +27,5 @@ target_link_libraries(
         ${LOG_LIB}
         android                                   # <-- Android core
 )
+
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,max-page-size=16384")

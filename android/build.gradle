@@ -115,6 +115,16 @@ repositories {
     google()
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "androidx.camera:camera-core:1.4.0"
+        force "androidx.camera:camera-camera2:1.4.0"
+        force "androidx.camera:camera-lifecycle:1.4.0"
+        force "androidx.camera:camera-view:1.4.0"
+        force "androidx.camera:camera-video:1.4.0"
+    }
+}
+
 
 dependencies {
     // For < 0.71, this will be from the local maven repo
