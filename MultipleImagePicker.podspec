@@ -27,14 +27,17 @@ Pod::Spec.new do |s|
   }
 
 
-  s.dependency "HXPhotoPicker/Picker", "4.2.4"
-  s.dependency "HXPhotoPicker/Camera/Lite", "4.2.4"
-  s.dependency "HXPhotoPicker/Editor", "4.2.4"
+  # Track HXPhotoPicker 5.x (use latest compatible patch)
+  s.dependency "HXPhotoPicker/Picker", "~> 5.0"
+  s.dependency "HXPhotoPicker/Camera/Lite", "~> 5.0"
+  s.dependency "HXPhotoPicker/Editor", "~> 5.0"
 
   s.pod_target_xcconfig = {
     # C++ compiler flags, mainly for folly.
     "CLANG_CXX_LANGUAGE_STANDARD" => "c++20",
-    "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) FOLLY_NO_CONFIG FOLLY_CFG_NO_COROUTINES FOLLY_MOBILE"
+    "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) FOLLY_NO_CONFIG FOLLY_CFG_NO_COROUTINES FOLLY_MOBILE",
+    # Ensure Objective-C categories (+load) are linked for Nitro autolinking.
+    "OTHER_LDFLAGS" => "$(inherited) -ObjC"
   }
 
   if ENV["USE_FRAMEWORKS"]
