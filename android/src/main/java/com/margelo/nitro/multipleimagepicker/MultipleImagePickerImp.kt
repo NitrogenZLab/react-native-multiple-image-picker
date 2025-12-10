@@ -65,7 +65,8 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
         rejected: (reject: Double) -> Unit
     ) {
         PictureAppMaster.getInstance().app = this
-        val activity = currentActivity
+        val activity = reactApplicationContext.currentActivity
+            ?: throw IllegalStateException("No current Activity available")
         val imageEngine = GlideEngine.createGlideEngine()
 
         // set global config
@@ -258,7 +259,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
             // Add listener before starting UCrop
             reactApplicationContext.addActivityEventListener(cropActivityEventListener)
 
-            currentActivity?.let { uCrop.start(it, REQUEST_CROP) }
+            reactApplicationContext.currentActivity?.let { uCrop.start(it, REQUEST_CROP) }
         } catch (e: Exception) {
             rejected(0.0)
         }
@@ -310,8 +311,10 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
             }
         }
 
+        val activity = reactApplicationContext.currentActivity
+            ?: throw IllegalStateException("No current Activity available")
         PictureSelector
-            .create(currentActivity)
+            .create(activity)
             .openPreview()
             .setImageEngine(imageEngine)
             .setLanguage(getLanguage(config.language))
@@ -345,7 +348,8 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
         resolved: (result: CameraResult) -> Unit,
         rejected: (reject: Double) -> Unit
     ) {
-        val activity = currentActivity
+        val activity = reactApplicationContext.currentActivity
+            ?: throw IllegalStateException("No current Activity available")
         val chooseMode = getChooseMode(config.mediaType)
 
         PictureSelector
@@ -361,7 +365,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
                     setCropEngine(CropEngine(cropOption))
                 }
             }
-            .forResultActivity(object : OnResultCallbackListener<LocalMedia?> {
+            .forResult(object : OnResultCallbackListener<LocalMedia?> {
                 override fun onResult(results: java.util.ArrayList<LocalMedia?>?) {
                     results?.first()?.let {
                         val result = getResult(it)
@@ -505,7 +509,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
         val iconBack =
             if (isDark) com.luck.picture.lib.R.drawable.ps_ic_back else com.luck.picture.lib.R.drawable.ps_ic_black_back
 
-        cropOption.setLogoColor(primaryColor)
+        cropOption.setLogoColor(primaryColor ?: Color.BLACK)
 
         // TITLE BAR
         titleBar.titleBackgroundColor = background
@@ -547,7 +551,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
         mainStyle.isAdapterItemIncludeEdge = true
         mainStyle.isPreviewSelectRelativeBottom = false
 //        mainStyle.previewSelectTextSize = Constant.TOOLBAR_TEXT_SIZE
-        mainStyle.selectTextColor = primaryColor
+        mainStyle.selectTextColor = primaryColor ?: Color.BLACK
 //        mainStyle.selectTextSize = Constant.TOOLBAR_TEXT_SIZE
         mainStyle.selectBackground = selectType
         mainStyle.isSelectNumberStyle = isNumber

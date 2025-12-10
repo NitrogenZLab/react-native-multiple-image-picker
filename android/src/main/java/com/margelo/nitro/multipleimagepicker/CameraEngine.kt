@@ -1,6 +1,7 @@
 package com.margelo.nitro.multipleimagepicker
 
 import android.content.Context
+import android.graphics.Color
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.facebook.react.bridge.ColorPropConverter
@@ -30,7 +31,7 @@ class CameraEngine(
         camera.setOutputPathDir(getSandboxCameraOutputPath())
 
         config.color?.let {
-            val primaryColor = ColorPropConverter.getColor(it, appContext)
+            val primaryColor = ColorPropConverter.getColor(it, appContext) ?: Color.BLACK
             camera.setCaptureLoadingColor(primaryColor)
         }
 
