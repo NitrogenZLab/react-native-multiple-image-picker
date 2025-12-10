@@ -146,6 +146,21 @@ dependencies {
     implementation project(":react-native-nitro-modules")
 }
 
+// Ensure NitroModules native library is built before this module's CMake tasks
+android.libraryVariants.all { variant ->
+    def variantName = variant.name.capitalize()
+    def nitroModulesProject = project(":react-native-nitro-modules")
+    
+    // Make our CMake tasks depend on NitroModules CMake tasks
+    tasks.matching { it.name.contains("externalNativeBuild") && it.name.contains(variantName) }.all { task ->
+        nitroModulesProject.tasks.matching { 
+            it.name.contains("externalNativeBuild") && it.name.contains(variantName) 
+        }.all { nitroTask ->
+            task.dependsOn nitroTask
+        }
+    }
+}
+
 if (isNewArchitectureEnabled()) {
     react {
         jsRootDir = file("../src/")
