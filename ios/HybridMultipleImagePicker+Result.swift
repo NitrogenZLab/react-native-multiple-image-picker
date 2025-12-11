@@ -6,7 +6,6 @@
 //
 
 import HXPhotoPicker
-// import Photos
 
 extension HybridMultipleImagePicker {
     func getResult(_ asset: PhotoAsset) async throws -> PickerResult {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   ActionSheetIOS,
   Alert,
@@ -16,7 +16,6 @@ import {
 } from 'react-native'
 
 import { StyleSheet } from 'react-native'
-import ImageGrid from '@baronha/react-native-image-grid'
 import {
   openPicker,
   PickerResult,
@@ -77,44 +76,49 @@ export default function App() {
     })
   }
 
-  const onPressImage = (_: PickerResult, index: number) => {
-    openPreview(images, index, {
-      onLongPress: () => {
-        if (Platform.OS === 'ios') {
-          ActionSheetIOS.showActionSheetWithOptions(
-            {
-              options: ['Download', 'Cancel'],
-              cancelButtonIndex: 1,
-              userInterfaceStyle: colorScheme ?? 'light',
-            },
-            (buttonIndex) => {
-              if (buttonIndex === 0) {
-                // Download
-              } else if (buttonIndex === 1) {
-                // Cancel
+  console.log('images: ', images)
+
+  const onPressImage = useCallback(
+    (_: PickerResult, index: number) => {
+      openPreview(images, index, {
+        onLongPress: () => {
+          if (Platform.OS === 'ios') {
+            ActionSheetIOS.showActionSheetWithOptions(
+              {
+                options: ['Download', 'Cancel'],
+                cancelButtonIndex: 1,
+                userInterfaceStyle: colorScheme ?? 'light',
+              },
+              (buttonIndex) => {
+                if (buttonIndex === 0) {
+                  // Download
+                } else if (buttonIndex === 1) {
+                  // Cancel
+                }
               }
-            }
-          )
-        } else {
-          Alert.alert('Options', '', [
-            {
-              text: 'Cancel',
-              style: 'cancel',
-              onPress: () => {
-                console.log('Cancel')
+            )
+          } else {
+            Alert.alert('Options', '', [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+                onPress: () => {
+                  console.log('Cancel')
+                },
               },
-            },
-            {
-              text: 'Download',
-              onPress: () => {
-                console.log('Download')
+              {
+                text: 'Download',
+                onPress: () => {
+                  console.log('Download')
+                },
               },
-            },
-          ])
-        }
-      },
-    })
-  }
+            ])
+          }
+        },
+      })
+    },
+    [images, colorScheme]
+  )
 
   const onPicker = async () => {
     try {
@@ -167,14 +171,39 @@ export default function App() {
     }
   }
 
-  const onRemovePhoto = (_: PickerResult, index: number) => {
-    const data = [...images].filter((__, idx) => idx !== index)
-    setImages(data)
-  }
+  const onRemovePhoto = useCallback(
+    (_: PickerResult, index: number) => {
+      const data = [...images].filter((__, idx) => idx !== index)
+      setImages(data)
+    },
+    [images, setImages]
+  )
 
   const onChangeTheme = (value: string) => {
     Appearance.setColorScheme(value as ColorSchemeName)
   }
+
+  const renderImage = useMemo(() => {
+    return (
+      <View style={style.imageContainer}>
+        {images.map((image, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => onPressImage(image, index)}
+            style={style.image}
+          >
+            <Image source={{ uri: image.path }} style={style.image} />
+            <TouchableOpacity
+              style={style.removeButton}
+              onPress={() => onRemovePhoto(image, index)}
+            >
+              <Image source={assets.plusSign} style={style.trash} />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        ))}
+      </View>
+    )
+  }, [images, onPressImage, onRemovePhoto])
 
   return (
     <Container>
@@ -212,17 +241,7 @@ export default function App() {
           >
             {images.length > 0 ? (
               <>
-                <ImageGrid
-                  dataImage={images}
-                  onPressImage={onPressImage}
-                  width={WIDTH - 6}
-                  sourceKey={'path'}
-                  videoKey={'type'}
-                  conditionCheckVideo={'video'}
-                  videoURLKey={'thumbnail'}
-                  showDelete
-                  onDeleteImage={onRemovePhoto}
-                />
+                {renderImage}
                 <Button style={style.buttonOpen} onPress={onCrop}>
                   Open Cropping
                 </Button>
@@ -618,6 +637,8 @@ export default function App() {
   )
 }
 
+const numberOfColumn = 3
+
 const style = StyleSheet.create({
   titleView: {
     padding: 16,
@@ -686,7 +707,6 @@ const style = StyleSheet.create({
 
   des: {
     fontSize: 12,
-    // marginBottom: 12,
   },
   keyboardAvoidingView: {
     flex: 1,
@@ -708,5 +728,29 @@ const style = StyleSheet.create({
   },
   openPicker: {
     flex: 1,
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    paddingHorizontal: 6,
+  },
+  image: {
+    width: (WIDTH - 24) / numberOfColumn,
+    height: (WIDTH - 24) / numberOfColumn,
+  },
+
+  removeButton: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: 100,
+    padding: 6,
+  },
+  trash: {
+    width: 16,
+    height: 16,
+    transform: [{ rotate: '45deg' }],
   },
 })
