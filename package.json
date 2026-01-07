@@ -34,8 +34,8 @@
     "typescript": "tsc --noEmit false",
     "specs": "bun run --filter=\"**\" typescript && bun nitro-codegen --logLevel=\"debug\"",
     "nitro": "yarn nitro-codegen",
-    "example": "yarn --cwd MultipleImagePickerExample",
-    "pod": "cd MultipleImagePickerExample && pod-install --quiet",
+    "example": "yarn --cwd example",
+    "pod": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pod",
     "prepare": "bob build"
   },
