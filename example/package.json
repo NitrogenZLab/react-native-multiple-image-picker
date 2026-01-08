@@ -30,7 +30,7 @@
     "@react-native/typescript-config": "0.75.2",
     "@types/react": "~19.1.10",
     "react-native-builder-bob": "^0.30.0",
-    "react-native-nitro-modules": "^0.25.2",
+    "react-native-nitro-modules": "^0.27.4",
     "typescript": "~5.9.2"
   },
   "private": true

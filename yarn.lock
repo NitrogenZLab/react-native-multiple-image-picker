@@ -4585,16 +4585,16 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-nitro-codegen@0.25.2:
-  version "0.25.2"
-  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.25.2.tgz#12a67606b52c18be4209cf9fbc08ae3cca9d4bcc"
-  integrity sha512-i0pGujdtmUaSmsawU6bmyFfW6MQbq+PZCWDT10QQg1EQbdPRvYAB5773R9GZtYoGNMGJ5qZVZUWnPBJRPOe61A==
+nitro-codegen@0.27.4:
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.27.4.tgz#e5b8f92e403d835dda1bca4f2f519c642bcf4b5d"
+  integrity sha512-VTuZpvTvOZNorkzrUOit/B+9FE5+G2XY4DjpmZOfJXm5LZSHllu2dnXS9FWj6+mWSg/uhM8/gdV2jsKcLki93w==
   dependencies:
     chalk "^5.3.0"
-    react-native-nitro-modules "^0.25.2"
+    react-native-nitro-modules "^0.27.4"
     ts-morph "^25.0.0"
     yargs "^17.7.2"
-    zod "^3.23.8"
+    zod "^4.0.5"
 
 nocache@^3.0.1:
   version "3.0.4"
@@ -5100,10 +5100,15 @@ react-native-builder-bob@^0.30.0:
     which "^2.0.2"
     yargs "^17.5.1"
 
-react-native-nitro-modules@0.25.2, react-native-nitro-modules@^0.25.2:
-  version "0.25.2"
-  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.25.2.tgz#3d03869934854d7509c2f0dbaf4dca83d6969faf"
-  integrity sha512-rL+X0LzB8BXvpdrUE/+oZ5v4qS/1nZIq0M8Uctbvqq2q53sVCHX4995ffT8+lGIJe/f0QcBvvrEeXtBPl86iwQ==
+react-native-nitro-modules@0.27.4:
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.27.4.tgz#6420ed81de587e098196eb909cf1730444e2bb05"
+  integrity sha512-YCM39MzdYQD/rXUsP4U3JkhBbrFY5H4hokJBJx0v4QT5q11lHl7dNkE3sfEPSB/CCbPt6gmrKmL3O4ZTGH4p7Q==
+
+react-native-nitro-modules@^0.27.4:
+  version "0.27.6"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.27.6.tgz#4a48c0945ca1b7ce36ef1a10c24236e6f17a1b3d"
+  integrity sha512-g8v+4njjOcS5t19dsVMveODsZ0CifIvYO3WMt/XUykta4sRlMYmM4rlHAykgIYWPOIrwWmz/GE8iK22PlbDFIA==
 
 react-native@^0.75.2:
   version "0.75.4"
@@ -6237,7 +6242,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@^3.23.8:
-  version "3.24.1"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.1.tgz#27445c912738c8ad1e9de1bea0359fa44d9d35ee"
-  integrity sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==
+zod@^4.0.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.5.tgz#aeb269a6f9fc259b1212c348c7c5432aaa474d2a"
+  integrity sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==

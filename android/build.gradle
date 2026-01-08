@@ -48,7 +48,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-O2 -frtti -fexceptions -Wall -fstack-protector-all"
-                arguments "-DANDROID_STL=c++_shared"
+                arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
                 abiFilters(*reactNativeArchitectures())
             }
         }
@@ -139,6 +139,11 @@ dependencies {
     // exoplayer
     implementation "com.google.android.exoplayer:exoplayer:2.19.1"
 
+    def camerax_version = "1.5.2"
+    api "androidx.camera:camera-core:${camerax_version}"
+    api "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-view:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
 
     implementation "com.facebook.react:react-native:+"
 
@@ -153,4 +158,3 @@ if (isNewArchitectureEnabled()) {
         codegenJavaPackageName = "com.margelo.nitro.multipleimagepicker"
     }
 }
-
