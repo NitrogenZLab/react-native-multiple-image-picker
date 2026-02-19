@@ -334,7 +334,7 @@ class MultipleImagePickerImp(reactContext: ReactApplicationContext?) :
                     return true
                 }
             })
-            .startFragmentPreview(index, false, assets)
+            .startActivityPreview(index, false, assets)
     }
 
 
